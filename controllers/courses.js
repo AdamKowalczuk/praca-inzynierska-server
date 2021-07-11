@@ -1,21 +1,19 @@
 import express from "express";
 import mongoose from "mongoose";
 
-// import PostMessage from '../models/postMessage.js';
 import Course from "../models/course.js";
 
 const router = express.Router();
 
 export const getCourses = async (req, res) => {
   try {
-    const courses = await Course.find();
+    const Courses = await Course.find();
 
-    res.status(200).json(courses);
+    res.status(200).json(Courses);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
-
 export const getCourse = async (req, res) => {
   const { id } = req.params;
 
@@ -25,6 +23,19 @@ export const getCourse = async (req, res) => {
     res.status(200).json(post);
   } catch (error) {
     res.status(404).json({ message: error.message });
+  }
+};
+
+export const createCourse = async (req, res) => {
+  const { title, description } = req.body;
+
+  const newCourse = new Course({ title, description });
+
+  try {
+    await newCourse.save();
+    res.status(201).json(newCourse);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
   }
 };
 
