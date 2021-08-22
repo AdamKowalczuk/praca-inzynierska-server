@@ -4,6 +4,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import courseRoutes from "./routes/course.js";
 import userRoutes from "./routes/user.js";
+import userAdminRoutes from "./routes/userAdmin.js";
 import dotenv from "dotenv";
 
 const app = express();
@@ -12,9 +13,15 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
+<<<<<<< HEAD
 app.use("/users", userRoutes);
 app.use("/courses", courseRoutes); //pod tym linkiem są dane
 // app.use("/", courseRoutes);
+=======
+app.use("/user", userRoutes);
+app.use("/userAdmin", userAdminRoutes);
+app.use("/courses", courseRoutes);
+>>>>>>> 6d736f4c2d74d8bbf46dee4202416f7a0b8c27ea
 
 dotenv.config();
 const CONNECTION_URL = process.env.ATLAS_URI;
