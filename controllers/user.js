@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-import UserModal from "../models/user.js";
+import User from "../models/user.js";
 
 const secret = "test";
 //trzeba zapisać do env
@@ -9,7 +9,7 @@ const secret = "test";
 export const signin = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const oldUser = await UserModal.findOne({ email });
+    const oldUser = await User.findOne({ email });
 
     if (!oldUser)
       return res.status(404).json({ message: "User doesn't exist" });
@@ -30,16 +30,18 @@ export const signin = async (req, res) => {
 };
 
 export const signup = async (req, res) => {
-  const { email, password, firstName, lastName } = req.body;
+  const { email, password, firstName, lastName, courses } = req.body;
+
   try {
-    const oldUser = await UserModal.findOne({ email });
+    const oldUser = await User.findOne({ email });
     if (oldUser)
       return res.status(400).json({ message: "User already exists" });
     const hashedPassword = await bcrypt.hash(password, 12);
-    const result = await UserModal.create({
+    const result = await User.create({
       email,
       password: hashedPassword,
       name: `${firstName} ${lastName}`,
+      courses,
     });
     const token = jwt.sign({ email: result.email, id: result._id }, secret, {
       expiresIn: "1h",
@@ -48,5 +50,67 @@ export const signup = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
     console.log(error);
+  }
+};
+export const updateLesson = async (req, res) => {
+  const { userId, courseId, chapterId, lessonId } = req.params;
+  const {
+    name,
+    description,
+    image,
+    isFinished,
+    _id,
+    actualCourse,
+    actualChapter,
+    actualLesson,
+  } = req.body;
+  const data = { name, description, image, isFinished, _id };
+  let user = await User.findById(userId);
+  user.courses[actualCourse].chapters[actualChapter].lessons[actualLesson] =
+    data;
+  const updatedUser = await User.findByIdAndUpdate(userId, user, {
+    new: true,
+  });
+  res.json(updatedUser);
+};
+export const updateQuiz = async (req, res) => {
+  const { form, userId, courseId, chapterId } = req.params;
+  const {
+    name,
+    description,
+    isFinished,
+    lessons,
+    quiz,
+    isQuizCompleted,
+    icon,
+    _id,
+    actualCourse,
+    actualChapter,
+  } = req.body;
+  const data = {
+    name,
+    description,
+    isFinished,
+    lessons,
+    quiz,
+    isQuizCompleted,
+    icon,
+    _id,
+  };
+  let user = await User.findById(userId);
+  user.courses[actualCourse].chapters[actualChapter] = data;
+  const updatedUser = await User.findByIdAndUpdate(userId, user, {
+    new: true,
+  });
+  res.json(updatedUser);
+};
+export const getUsers = async (req, res) => {
+  try {
+    const Users = await User.find();
+    // console.log(Users);
+
+    res.status(200).json(Users);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
   }
 };
