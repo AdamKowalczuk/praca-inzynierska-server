@@ -8,7 +8,6 @@ const secret = "test";
 
 export const signin = async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
   try {
     const oldUser = await User.findOne({ email });
 
@@ -53,6 +52,7 @@ export const signup = async (req, res) => {
     console.log(error);
   }
 };
+
 export const updateLesson = async (req, res) => {
   const { userId, courseId, chapterId, lessonId } = req.params;
   const {
