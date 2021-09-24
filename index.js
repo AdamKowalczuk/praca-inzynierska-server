@@ -21,6 +21,9 @@ dotenv.config();
 const CONNECTION_URL = process.env.ATLAS_URI;
 const PORT = process.env.PORT || 5000;
 
+// dodane aby zmienić cache control
+app.use(express.static("public"));
+
 mongoose
   .connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() =>
