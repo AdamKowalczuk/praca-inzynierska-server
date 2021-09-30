@@ -10,6 +10,7 @@ const userSchema = mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  achievements: { type: Array },
 });
 
 export default mongoose.model("User", userSchema);

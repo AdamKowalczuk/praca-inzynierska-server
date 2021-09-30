@@ -14,19 +14,6 @@ export const getCourses = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
-
-// export const getCourse = async (req, res) => {
-//   const { id } = req.params;
-
-//   try {
-//     const course = await Course.findById(id);
-
-//     res.status(200).json(course);
-//   } catch (error) {
-//     res.status(404).json({ message: error.message });
-//   }
-// };
-
 export const createCourse = async (req, res) => {
   const { title, description } = req.body;
 

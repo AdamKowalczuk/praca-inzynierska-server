@@ -4,9 +4,6 @@ import { getCourses } from "../controllers/courses.js";
 
 const router = express.Router();
 
-// router.get("/", (req, res) => {
-//   res.send("THIS WORKS!");
-// });
 router.get("/", getCourses);
 // router.get("/:id", getCourse);
 // router.post('/',auth,  createPost); musi być zalogowany żeby dodać

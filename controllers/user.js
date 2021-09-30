@@ -30,8 +30,8 @@ export const signin = async (req, res) => {
 };
 
 export const signup = async (req, res) => {
-  const { email, password, firstName, lastName, courses } = req.body;
-
+  const { email, password, firstName, lastName, courses, achievements } =
+    req.body;
   try {
     const oldUser = await User.findOne({ email });
     if (oldUser)
@@ -42,6 +42,7 @@ export const signup = async (req, res) => {
       password: hashedPassword,
       name: `${firstName} ${lastName}`,
       courses,
+      achievements,
     });
     const token = jwt.sign({ email: result.email, id: result._id }, secret, {
       expiresIn: "1h",
@@ -108,8 +109,6 @@ export const updateQuiz = async (req, res) => {
 export const getUsers = async (req, res) => {
   try {
     const Users = await User.find();
-    // console.log(Users);
-
     res.status(200).json(Users);
   } catch (error) {
     res.status(404).json({ message: error.message });
