@@ -7,6 +7,7 @@ import {
   getUsers,
   updateLesson,
   updateQuiz,
+  updateExercise,
 } from "../controllers/user.js";
 
 router.post("/signin", signin);
@@ -17,5 +18,6 @@ router.patch(
   updateLesson
 );
 router.patch("/:userId/courses/:courseId/chapters/:chapterId", updateQuiz);
+router.patch("/:userId/courses/:courseId/chapters/:chapterId", updateExercise);
 
 export default router;
