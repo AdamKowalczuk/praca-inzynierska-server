@@ -76,36 +76,37 @@ export const updateLesson = async (req, res) => {
   res.json(updatedUser);
 };
 export const updateQuiz = async (req, res) => {
-  console.log("QUIZ");
-  // const { form, userId, courseId, chapterId } = req.params;
-  // const {
-  //   name,
-  //   description,
-  //   isFinished,
-  //   lessons,
-  //   quiz,
-  //   isQuizCompleted,
-  //   icon,
-  //   _id,
-  //   actualCourse,
-  //   actualChapter,
-  // } = req.body;
-  // const data = {
-  //   name,
-  //   description,
-  //   isFinished,
-  //   lessons,
-  //   quiz,
-  //   isQuizCompleted,
-  //   icon,
-  //   _id,
-  // };
-  // let user = await User.findById(userId);
-  // user.courses[actualCourse].chapters[actualChapter] = data;
-  // const updatedUser = await User.findByIdAndUpdate(userId, user, {
-  //   new: true,
-  // });
-  // res.json(updatedUser);
+  // console.log("QUIZ");
+  const { form, userId, courseId, chapterId } = req.params;
+  const {
+    name,
+    description,
+    isFinished,
+    lessons,
+    quiz,
+    isQuizCompleted,
+    icon,
+    _id,
+    actualCourse,
+    actualChapter,
+  } = req.body;
+  const data = {
+    name,
+    description,
+    isFinished,
+    lessons,
+    quiz,
+    isQuizCompleted,
+    icon,
+    _id,
+  };
+  let user = await User.findById(userId);
+  console.log("User", user);
+  user.courses[actualCourse].chapters[actualChapter] = data;
+  const updatedUser = await User.findByIdAndUpdate(userId, user, {
+    new: true,
+  });
+  res.json(updatedUser);
 };
 export const updateExercise = async (req, res) => {
   console.log("EXERCISE");
