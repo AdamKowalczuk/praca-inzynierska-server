@@ -158,3 +158,15 @@ export const deleteUser = async (req, res) => {
   await User.findByIdAndRemove(id);
   res.json({ message: "User deleted successfully." });
 };
+
+export const finishAchievement = async (req, res) => {
+  const { userId } = req.params;
+  const { achievementId } = req.body;
+  let user = await User.findById(userId);
+  console.log(user.achievements[achievementId]);
+  user.achievements[achievementId].isFinished = true;
+  const updatedUser = await User.findByIdAndUpdate(userId, user, {
+    new: true,
+  });
+  res.json(updatedUser);
+};

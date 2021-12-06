@@ -9,6 +9,7 @@ import {
   updateQuiz,
   updateExercise,
   deleteUser,
+  finishAchievement,
 } from "../controllers/user.js";
 
 router.post("/signin", signin);
@@ -21,5 +22,6 @@ router.patch(
 router.patch("/:userId/courses/:courseId/chapters/:chapterId", updateQuiz);
 router.patch("/:userId/courses/:courseId/chapters/:chapterId", updateExercise);
 router.delete("/:id", deleteUser);
+router.patch("/:userId/achievements", finishAchievement);
 
 export default router;
