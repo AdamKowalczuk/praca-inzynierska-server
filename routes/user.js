@@ -20,7 +20,11 @@ router.patch(
   updateLesson
 );
 router.patch("/:userId/courses/:courseId/chapters/:chapterId", updateQuiz);
-router.patch("/:userId/courses/:courseId/chapters/:chapterId", updateExercise);
+
+router.patch(
+  "/:userId/courses/:courseId/chapters/:chapterId/exercises",
+  updateExercise
+);
 router.delete("/:id", deleteUser);
 router.patch("/:userId/achievements", finishAchievement);
 

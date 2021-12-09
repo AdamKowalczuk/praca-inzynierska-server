@@ -76,7 +76,6 @@ export const updateLesson = async (req, res) => {
   res.json(updatedUser);
 };
 export const updateQuiz = async (req, res) => {
-  // console.log("QUIZ");
   const { form, userId, courseId, chapterId } = req.params;
   const {
     name,
@@ -101,7 +100,6 @@ export const updateQuiz = async (req, res) => {
     _id,
   };
   let user = await User.findById(userId);
-  console.log("User", user);
   user.courses[actualCourse].chapters[actualChapter] = data;
   const updatedUser = await User.findByIdAndUpdate(userId, user, {
     new: true,
@@ -109,38 +107,31 @@ export const updateQuiz = async (req, res) => {
   res.json(updatedUser);
 };
 export const updateExercise = async (req, res) => {
-  console.log("EXERCISE");
-  const { form, userId, courseId, chapterId } = req.params;
-  console.log(req.body);
-  console.log(req.params);
-  // const {
-  //   name,
-  //   description,
-  //   isFinished,
-  //   lessons,
-  //   quiz,
-  //   isQuizCompleted,
-  //   icon,
-  //   _id,
-  //   actualCourse,
-  //   actualChapter,
-  // } = req.body;
-  // const data = {
-  //   name,
-  //   description,
-  //   isFinished,
-  //   lessons,
-  //   quiz,
-  //   isQuizCompleted,
-  //   icon,
-  //   _id,
-  // };
-  // let user = await User.findById(userId);
-  // user.courses[actualCourse].chapters[actualChapter] = data;
-  // const updatedUser = await User.findByIdAndUpdate(userId, user, {
-  //   new: true,
-  // });
-  // res.json(updatedUser);
+  const { userId, courseId, chapterId } = req.params;
+  let form = req.body.form.form;
+  let actualExercise = req.body.actualExercise;
+  console.log(form);
+  let actualCourse = form[0].actualCourse;
+  let actualChapter = form[0].actualChapter;
+
+  let user = await User.findById(userId);
+  user.courses[actualCourse].chapters[actualChapter].exercises = form;
+  console.log(
+    actualExercise,
+    user.courses[actualCourse].chapters[actualChapter].exercises.length - 1
+  );
+  if (
+    actualExercise ==
+    user.courses[actualCourse].chapters[actualChapter].exercises.length - 1
+  ) {
+    user.courses[actualCourse].chapters[
+      actualChapter
+    ].isExerciseCompleted = true;
+  }
+  const updatedUser = await User.findByIdAndUpdate(userId, user, {
+    new: true,
+  });
+  res.json(updatedUser);
 };
 export const getUsers = async (req, res) => {
   try {
