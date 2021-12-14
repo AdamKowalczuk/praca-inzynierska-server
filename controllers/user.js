@@ -110,16 +110,12 @@ export const updateExercise = async (req, res) => {
   const { userId, courseId, chapterId } = req.params;
   let form = req.body.form.form;
   let actualExercise = req.body.actualExercise;
-  console.log(form);
   let actualCourse = form[0].actualCourse;
   let actualChapter = form[0].actualChapter;
 
   let user = await User.findById(userId);
   user.courses[actualCourse].chapters[actualChapter].exercises = form;
-  console.log(
-    actualExercise,
-    user.courses[actualCourse].chapters[actualChapter].exercises.length - 1
-  );
+
   if (
     actualExercise ==
     user.courses[actualCourse].chapters[actualChapter].exercises.length - 1
@@ -154,7 +150,7 @@ export const finishAchievement = async (req, res) => {
   const { userId } = req.params;
   const { achievementId } = req.body;
   let user = await User.findById(userId);
-  console.log(user.achievements[achievementId]);
+
   user.achievements[achievementId].isFinished = true;
   const updatedUser = await User.findByIdAndUpdate(userId, user, {
     new: true,
