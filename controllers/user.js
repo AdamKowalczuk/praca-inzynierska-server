@@ -3,8 +3,7 @@ import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import User from "../models/user.js";
 
-const secret = "test";
-//trzeba zapisać do env
+const secret = "1234";
 
 export const signin = async (req, res) => {
   const { email, password } = req.body;

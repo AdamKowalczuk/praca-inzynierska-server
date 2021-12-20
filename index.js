@@ -13,14 +13,12 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 app.use("/users", userRoutes);
-app.use("/courses", courseRoutes); //pod tym linkiem są dane
-// app.use("/", courseRoutes);
+app.use("/courses", courseRoutes);
 
 dotenv.config();
 const CONNECTION_URL = process.env.ATLAS_URI;
 const PORT = process.env.PORT || 5000;
 
-// dodane aby zmienić cache control
 app.use(express.static("public"));
 
 mongoose
