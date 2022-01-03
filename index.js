@@ -2,7 +2,6 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import bodyParser from "body-parser";
-import courseRoutes from "./routes/course.js";
 import userRoutes from "./routes/user.js";
 import dotenv from "dotenv";
 
@@ -13,7 +12,6 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 app.use("/users", userRoutes);
-app.use("/courses", courseRoutes);
 
 dotenv.config();
 const CONNECTION_URL = process.env.ATLAS_URI;
